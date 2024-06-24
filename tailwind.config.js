@@ -13,14 +13,14 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
-
+    safelist: ["bg-amber-700", "bg-emerald-700", "bg-red-500"],
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                inter: ["'Inter'", "sans-serif"],
             },
         },
     },
 
-    plugins: [forms, typography, flowbite],
+    plugins: [forms, typography],
 };

@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware([
     'auth:sanctum',
@@ -15,3 +13,16 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/', function () {
+    if (auth()->check()) {
+        return view('welcome');
+    }
+    return view('auth.register');
+})->name('/');
+
+Route::get('/tarea/nueva', function () {
+    return view('task.add-task-form');
+})->name('newTask');
+
+Route::post('/addTask', [TaskController::class, 'addTask'])->name('addTask');
