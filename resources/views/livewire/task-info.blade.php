@@ -1,3 +1,4 @@
+{{-- COMPONENTE QUE MUESTRA EL FORMULARIO DETALLADO PARA LA EDICIÓN DE LAS TAREAS SIN PROYECTO --}}
 @php
     $disabled = '';
     if ($task->status->value == 'Vencida') {
@@ -5,8 +6,7 @@
     }
 @endphp
 
-<div id="{{ $task->id }}" wire:ignore
-    class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md hidden task-info-container">
+<div id="{{ $task->id }}" wire:ignore class="md:col-span-1 p-4 hidden task-info-container">
     <div class="flex justify-between mb-5">
         <div class="text-2xl font-bold mb-2">
             {{ $task->title }}

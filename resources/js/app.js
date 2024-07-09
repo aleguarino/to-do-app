@@ -1,7 +1,8 @@
 import "./bootstrap";
-// start: Sidebar
+//boton que abre el sidebar
 const sidebarToggle = document.querySelector(".sidebar-toggle");
 const sidebarOverlay = document.querySelector(".sidebar-overlay");
+
 const sidebarMenu = document.querySelector(".sidebar-menu");
 const main = document.querySelector(".main");
 if (window.innerWidth < 768) {
@@ -113,85 +114,3 @@ function hidePopper(popperId) {
         };
     });
 }
-// end: Popper
-
-// start: Tab
-/*const botones = document.querySelectorAll(".task-button");
-botones.forEach((boton) => {
-    boton.addEventListener("click", function () {
-        botones.forEach((b) => b.classList.remove("active"));
-        this.classList.add("active");
-    });
-});
-*/
-// end: Tab
-
-// start: Chart
-new Chart(document.getElementById("order-chart"), {
-    type: "line",
-    data: {
-        labels: generateNDays(7),
-        datasets: [
-            {
-                label: "Active",
-                data: generateRandomData(7),
-                borderWidth: 1,
-                fill: true,
-                pointBackgroundColor: "rgb(59, 130, 246)",
-                borderColor: "rgb(59, 130, 246)",
-                backgroundColor: "rgb(59 130 246 / .05)",
-                tension: 0.2,
-            },
-            {
-                label: "Completed",
-                data: generateRandomData(7),
-                borderWidth: 1,
-                fill: true,
-                pointBackgroundColor: "rgb(16, 185, 129)",
-                borderColor: "rgb(16, 185, 129)",
-                backgroundColor: "rgb(16 185 129 / .05)",
-                tension: 0.2,
-            },
-            {
-                label: "Canceled",
-                data: generateRandomData(7),
-                borderWidth: 1,
-                fill: true,
-                pointBackgroundColor: "rgb(244, 63, 94)",
-                borderColor: "rgb(244, 63, 94)",
-                backgroundColor: "rgb(244 63 94 / .05)",
-                tension: 0.2,
-            },
-        ],
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-            },
-        },
-    },
-});
-
-function generateNDays(n) {
-    const data = [];
-    for (let i = 0; i < n; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        data.push(
-            date.toLocaleString("en-US", {
-                month: "short",
-                day: "numeric",
-            })
-        );
-    }
-    return data;
-}
-function generateRandomData(n) {
-    const data = [];
-    for (let i = 0; i < n; i++) {
-        data.push(Math.round(Math.random() * 10));
-    }
-    return data;
-}
-// end: Chart

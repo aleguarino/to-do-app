@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('group_user', function (Blueprint $table) {
+        Schema::create('project_user', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('user_id');
             $table->string('role');
-
-            $table->foreign('group_id')->references('id')->on('groups');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('group_user');
+        Schema::dropIfExists('project_user');
     }
 };

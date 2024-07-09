@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\TaskStatusEnum;
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -29,22 +30,22 @@ class TaskController extends Controller
 
     public static function listPendingTasks(): Collection
     {
-        return Task::where('status', TaskStatusEnum::PENDING)->get();
+        return Task::where(['status' => TaskStatusEnum::PENDING, 'user_id' => Auth::user()->id])->get();
     }
 
     public static function listCompletedTasks(): Collection
     {
-        return Task::where('status', TaskStatusEnum::COMPLETED)->get();
+        return Task::where(['status' => TaskStatusEnum::COMPLETED, 'user_id' => Auth::user()->id])->get();
     }
 
     public static function listCanceledTasks(): Collection
     {
-        return Task::where('status', TaskStatusEnum::CANCELED)->get();
+        return Task::where(['status' => TaskStatusEnum::CANCELED, 'user_id' => Auth::user()->id])->get();
     }
 
     public static function listOverduesTasks(): Collection
     {
-        return Task::where('status', TaskStatusEnum::OVERDUE)->get();
+        return Task::where(['status' => TaskStatusEnum::OVERDUE, 'user_id' => Auth::user()->id])->get();
     }
 
     public function addTask(Request $request)
@@ -56,13 +57,19 @@ class TaskController extends Controller
         $validatedData = $request->validate([
             'deadline' => 'required|date|after:today',
         ], $messages);
-        $user = Auth::user()->id;
+        // comprueba si la tarea está asociada a un proyecto
+        $project = $request->input('project') ?? null;
+        // comprueba si se ha asignado a otro usuario a la tarea
+        $user = $request->input('asignedUser') ?? Auth::user()->id;
+
         $title = $request->input('title');
         $description = $request->input('description');
         $deadline = $request->input('deadline');
         $priority = $request->input('priority');
-        $this->task->add($user, $title, $description, TaskStatusEnum::PENDING, $deadline, $priority);
-        return redirect('/')->with('success', 'Tarea creada con éxito');
+        $this->task->add($user, $title, $description, TaskStatusEnum::PENDING, $deadline, $priority, $project);
+
+        // redirige a la página principal o a la del proyecto en función del tipo de tarea
+        return redirect()->route($project ? 'showProyect' : '/', ['id'  => $project])->with('ok', 'Tarea creada con éxito');
     }
 
     public function editTask(Request $request)
@@ -72,7 +79,7 @@ class TaskController extends Controller
         $deadline = $request->input('deadline');
         $priority = $request->input('priority');
         $this->task->updateTask($request->input('id'), $title, $description, TaskStatusEnum::PENDING, $deadline, $priority);
-        return redirect()->route('/');
+        return redirect()->route('/')->with('ok', 'Tarea actualizada');
     }
 
     public function deleteTask(Request $request)
@@ -82,5 +89,12 @@ class TaskController extends Controller
             $this->task->deleteTask($id);
         }
         return redirect()->route('/');
+    }
+
+    public function newTaskView($project = null)
+    {
+        if ($project)
+            $project = Project::find($project);
+        return view('task.add-task-form', ['project' => $project]);
     }
 }

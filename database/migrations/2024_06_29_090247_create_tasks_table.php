@@ -19,8 +19,10 @@ return new class extends Migration
             $table->date('deadline');
             $table->string('priority');
             $table->string('status');
-            $table->unsignedBigInteger('assigned_to')->nullable();
-            $table->foreign('assigned_to')->references('id')->on('users');
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

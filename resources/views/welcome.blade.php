@@ -18,9 +18,9 @@
         <livewire:user-tasks />
 
 
+
     </div>
     @push('custom-scripts')
-        <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
         <script>
             @if (session('success'))
                 sendNotification(`{{ session('success') }}`);

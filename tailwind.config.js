@@ -13,7 +13,17 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
-    safelist: ["bg-amber-700", "bg-emerald-700", "bg-red-500"],
+    safelist: [
+        "bg-amber-700",
+        "bg-emerald-700",
+        "bg-red-500",
+        "blue-500",
+        "bg-green-500",
+        "bg-yellow-300",
+        "bg-red-500",
+        "bg-green-500",
+        "bg-gray-500",
+    ],
     theme: {
         extend: {
             fontFamily: {

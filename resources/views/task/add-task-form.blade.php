@@ -1,18 +1,30 @@
+{{-- MUESTRA EL FORMULARIO DE AGREGACIÓN DE TAREA; /proyecto/nuevo; /tarea/nueva --}}
 @extends('navigation')
 
 {{-- NAVEGACION --}}
 @section('navbar')
-    <li class="mr-2">
-        <a href={{ route('/') }} class="text-gray-400 hover:text-gray-600 font-medium">Tareas</a>
-    </li>
+    @if (!isset($project))
+        <li class="mr-2">
+            <a href={{ route('/') }} class="text-gray-400 hover:text-gray-600 font-medium">Tareas</a>
+        </li>
+    @else
+        <li class="mr-2">
+            <a href={{ route('showProyect', $project->id) }}
+                class="text-gray-400 hover:text-gray-600 font-medium">{{ $project->name }}</a>
+        </li>
+    @endif
+
     <li class="text-gray-600 mr-2 font-medium">/</li>
-    <li class="text-gray-600 mr-2 font-medium">Nueva</li>
+    <li class="text-gray-600 mr-2 font-medium">Nueva tarea</li>
 @endsection
 
 {{-- FORMULARIO --}}
 @section('content')
     <form action="{{ route('addTask') }}" method="POST" class="form">
         @csrf
+        @if (isset($project))
+            <input type="text" hidden name="project" value="{{ $project->id }}" />
+        @endif
         <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
             <div class="container max-w-screen-lg mx-auto">
                 <div>
@@ -135,6 +147,11 @@
 
                                     </div>
 
+                                    {{-- ASIGNAR USUARIO --}}
+                                    @if (isset($project))
+                                        <livewire:select-user />
+                                    @endif
+
                                     <div class="md:col-span-5 text-right">
                                         <div class="inline-flex items-end">
                                             <button
@@ -149,3 +166,15 @@
                 </div>
     </form>
 @endsection
+@push('custom-scripts')
+    <script>
+        document.onkeydown = function() {
+            if (event.keyCode == 13) {
+                if (document.activeElement.tagName.toLowerCase() != "textarea") {
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+    </script>
+@endpush

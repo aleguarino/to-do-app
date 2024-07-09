@@ -6,7 +6,7 @@ use Throwable;
 use App\Models\Task;
 use Livewire\Component;
 
-class EditUserTask extends Component
+class EditProjectTask extends Component
 {
     public $task;
     public $id = '';
@@ -35,10 +35,6 @@ class EditUserTask extends Component
         $this->priority = $task->priority;
     }
 
-    public function render()
-    {
-        return view('livewire.edit-user-task');
-    }
 
     public function updateTask()
     {
@@ -57,5 +53,9 @@ class EditUserTask extends Component
         $task->priority = $this->priority;
         $task->save();
         $this->dispatch('refreshData');
+    }
+    public function render()
+    {
+        return view('livewire.edit-project-task');
     }
 }
