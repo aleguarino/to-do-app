@@ -89,13 +89,17 @@
 @script
     <script>
         let editBtns = document.querySelectorAll(".edit-btn");
+        let cancelBtns = document.querySelectorAll('.cancel-btn');
+        cancelBtns.forEach((button) => {
+            button.addEventListener("click", () => {
+                hideContainers();
+            })
+        })
         const taskInfoContainers = document.querySelectorAll('.task-info-container');
         editBtns.forEach((button, index) => {
             button.addEventListener("click", () => {
                 // Oculta todos los contenedores de información de tarea
-                taskInfoContainers.forEach(container => {
-                    container.classList.add('hidden');
-                });
+                hideContainers();
 
                 // Muestra el contenedor correspondiente al botón de edición clicado
                 taskInfoContainers[index].classList.remove('hidden');
@@ -109,5 +113,11 @@
                 taskInfoContainers[index].classList.add('opacity-100', 'scale-100');
             });
         });
+
+        function hideContainers() {
+            taskInfoContainers.forEach(container => {
+                container.classList.add('hidden');
+            });
+        };
     </script>
 @endscript

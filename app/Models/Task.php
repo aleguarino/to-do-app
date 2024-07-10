@@ -37,12 +37,14 @@ class Task extends Model
 
 
         // VERIFICA SI YA EXISTE EN LA TABLA INTERMEDIA PARA NO SISTITUIR EL VALOR
-        $projectObj = Project::find($project);
-        $existingRole = $projectObj->users()->where('user_id', $user_id)->first();
+        if ($project) {
+            $projectObj = Project::find($project);
+            $existingRole = $projectObj->users()->where('user_id', $user_id)->first();
 
-        if (!$existingRole) {
-            // ENLAZA EL PROYECTO CON EL USUARIO EN LA TABLA INTERMEDIA CON EL ROLE PREDETERMINADO
-            $projectObj->users()->attach($user_id, ['role' => ProjectUserRole::DEVELOPER]);
+            if (!$existingRole) {
+                // ENLAZA EL PROYECTO CON EL USUARIO EN LA TABLA INTERMEDIA CON EL ROLE PREDETERMINADO
+                $projectObj->users()->attach($user_id, ['role' => ProjectUserRole::DEVELOPER]);
+            }
         }
     }
 

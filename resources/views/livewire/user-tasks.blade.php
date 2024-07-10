@@ -46,8 +46,8 @@
         <div class="col-span-3 p-4 task-container">
 
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[540px] fold-table">
-                    <thead>
+                <table class="w-full md:min-w-[540px] fold-table">
+                    <thead class="hidden md:table-header-group">
                         <tr>
                             <th
                                 class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
@@ -67,13 +67,72 @@
                         @if (!isset($tasks) || empty($tasks))
                             No tiene ninguna tarea
                         @else
-                            @foreach ($tasks as $task)
+                            @foreach ($tasks as $index => $task)
                                 @php
                                     $today = new Datetime(date('Y-m-d'));
                                     $deadline = new Datetime($task->deadline);
                                     $days = $today->diff($deadline)->days;
                                 @endphp
-                                <tr id="{{ $task->id }}" class="view" onclick="openDetail({{ $task->id }})">
+                                <tr id="{{ $task->id }}"
+                                    class="view md:table-row @if ($index % 2 != 0) bg-slate-100 @endif"
+                                    onclick="openDetail({{ $task->id }})">
+                                    <!-- Columnas para pantallas medianas y grandes -->
+                                    <td class="py-2 px-4 border-b border-b-gray-50 hidden md:table-cell">
+                                        <div class="flex items-center">
+                                            <a href="#"
+                                                class="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">{{ $task->title }}</a>
+                                        </div>
+                                    </td>
+                                    @if ($task->status->value != 'Vencida')
+                                        <td class="py-2 px-4 border-b border-b-gray-50 hidden md:table-cell">
+                                            <span class="text-[13px] font-medium text-gray-400">
+                                                @if ($days == 0)
+                                                    Hoy
+                                                @else
+                                                    {{ $days == 1 ? $days . ' día' : $days . ' días' }}
+                                                @endif
+                                            </span>
+                                        </td>
+                                    @endif
+                                    <td class="py-2 px-4 border-b border-b-gray-50 hidden md:table-cell"
+                                        @if ($task->status->value == 'Vencida') colspan="2" text-align="right" @endif>
+                                        <span
+                                            class="inline-block p-1 rounded {{ $task->status->bgColor() }} font-medium text-[12px] leading-none">{{ $task->status }}</span>
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-50 hidden md:table-cell">
+                                        <span
+                                            class="inline-block p-1 {{ $task->priority->bgColor() }} rounded font-medium text-[12px] leading-none">{{ $task->priority }}</span>
+                                    </td>
+                                </tr>
+
+                                <!-- Filas para pantallas pequeñas -->
+                                <tr onclick="openDetail({{ $task->id }})"
+                                    class="md:hidden @if ($index % 2 != 0) bg-slate-100 @endif">
+                                    <td class="py-2 px-4 border-b border-b-gray-50">{{ $task->title }}</td>
+                                    <td class="py-2 px-4 border-b border-b-gray-50">
+                                        <span class="font-medium text-[12px]">Prioridad: </span><span
+                                            class="inline-block p-1 {{ $task->priority->bgColor() }} rounded font-medium text-[12px] leading-none">{{ $task->priority }}</span>
+                                    </td>
+                                </tr>
+                                <tr class="md:hidden @if ($index % 2 != 0) bg-slate-100 @endif">
+                                    <td class="py-2 px-4 border-b border-b-gray-50">
+                                        @if ($task->status->value != 'Vencida')
+                                            <span class="text-[13px] font-medium text-gray-400">Vencimiento:
+                                                @if ($days == 0)
+                                                    Hoy
+                                                @else
+                                                    {{ $days == 1 ? $days . ' día' : $days . ' días' }}
+                                                @endif
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="py-2 px-4 border-b border-b-gray-50">
+                                        <span class="font-medium text-[12px]">Estado: </span>
+                                        <span
+                                            class="inline-block p-1 rounded {{ $task->status->bgColor() }} font-medium text-[12px] leading-none">{{ $task->status->value }}</span>
+                                    </td>
+                                </tr>
+                                {{-- <tr id="{{ $task->id }}" class="view" onclick="openDetail({{ $task->id }})">
                                     <td class="py-2 px-4 border-b border-b-gray-50">
                                         <div class="flex items-center">
                                             <a href="#"
@@ -102,7 +161,7 @@
                                         <span
                                             class="inline-block p-1 {{ $task->priority->bgColor() }} rounded font-medium text-[12px] leading-none">{{ $task->priority }}</span>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             @endforeach
                         @endif
                     </tbody>
