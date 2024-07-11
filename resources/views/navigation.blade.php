@@ -83,36 +83,7 @@
             </ul>
             <ul class="ml-auto flex items-center">
                 @yield('action-menu')
-                {{-- NOTIFICACIONES --}}
-                {{-- <li class="dropdown">
-                    <button type="button"
-                        class="dropdown-toggle text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600">
-                        <i class="ri-notification-3-line"></i>
-                    </button>
-                    <div
-                        class="dropdown-menu shadow-md shadow-black/5 z-30 hidden max-w-xs w-full bg-white rounded-md border border-gray-100">
-                        <div class="flex items-center px-4 pt-4 border-b border-b-gray-100 notification-tab">
-                            <button type="button" data-tab="notification" data-tab-page="notifications"
-                                class="text-gray-400 font-medium text-[13px] hover:text-gray-600 border-b-2 border-b-transparent mr-4 pb-1 active">Notifications</button>
-                        </div>
-                        <div class="my-2">
-                            <ul class="max-h-64 overflow-y-auto" data-tab-for="notification" data-page="notifications">
-                                <li>
-                                    <a href="#" class="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt=""
-                                            class="w-8 h-8 rounded block object-cover align-middle">
-                                        <div class="ml-2">
-                                            <div
-                                                class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                                                New order</div>
-                                            <div class="text-[11px] text-gray-400">from a user</div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li> --}}
+
             </ul>
         </div>
         <div class="h-[calc(100vh-64px)]">
