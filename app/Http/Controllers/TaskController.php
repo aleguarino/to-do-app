@@ -20,7 +20,7 @@ class TaskController extends Controller
 
     public static function countTotalTasks(): int
     {
-        return Task::count();
+        return Task::where('user_id', auth()->id())->count();
     }
 
     public static function listTaks(): Collection

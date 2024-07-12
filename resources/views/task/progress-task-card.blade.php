@@ -1,29 +1,32 @@
 {{-- VARIABLES --}}
 @php
+    use App\Http\Controllers\TaskController;
+    use App\Enums\TaskStatusEnum;
+
     if (isset($type)) {
         switch ($type) {
-            case App\Enums\TaskStatusEnum::PENDING:
+            case TaskStatusEnum::PENDING:
                 $title = 'Tareas pendientes';
-                $tasks = App\Http\Controllers\TaskController::listPendingTasks();
+                $tasks = TaskController::listPendingTasks();
                 break;
-            case App\Enums\TaskStatusEnum::COMPLETED:
+            case TaskStatusEnum::COMPLETED:
                 $title = 'Tareas completadas';
-                $tasks = App\Http\Controllers\TaskController::listCompletedTasks();
+                $tasks = TaskController::listCompletedTasks();
                 break;
-            case App\Enums\TaskStatusEnum::CANCELED:
+            case TaskStatusEnum::CANCELED:
                 $title = 'Tareas canceladas';
-                $tasks = App\Http\Controllers\TaskController::listCanceledTasks();
+                $tasks = TaskController::listCanceledTasks();
                 break;
-            case App\Enums\TaskStatusEnum::OVERDUE:
+            case TaskStatusEnum::OVERDUE:
                 $title = 'Tareas vencidas';
-                $tasks = App\Http\Controllers\TaskController::listOverduesTasks();
+                $tasks = TaskController::listOverduesTasks();
                 break;
             default:
                 $title = 'Tareas';
-                $tasks = $tasks = App\Http\Controllers\TaskController::listTaks();
+                $tasks = $tasks = TaskController::listTaks();
         }
     }
-    $totalTasks = App\Http\Controllers\TaskController::countTotalTasks();
+    $totalTasks = TaskController::countTotalTasks();
 
 @endphp
 

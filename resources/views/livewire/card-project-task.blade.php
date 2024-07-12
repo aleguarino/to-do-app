@@ -55,7 +55,7 @@
                         @if ($project->isAdmin(auth()->id()))
                             <li>
                                 <button
-                                    class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50 cursor-pointer"
+                                    class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50 cursor-pointer w-full"
                                     wire:confirm="¿Está seguro?" wire:click="deleteTask()">Borrar</button>
                             </li>
                         @endif

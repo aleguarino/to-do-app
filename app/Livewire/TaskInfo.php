@@ -40,6 +40,12 @@ class TaskInfo extends Component
         return view('livewire.task-info');
     }
 
+    public function deleteTask()
+    {
+        $this->task->delete();
+        redirect()->route('/')->with('ok', 'Tarea borrada con éxito');
+    }
+
     public function updateTask()
     {
         try {

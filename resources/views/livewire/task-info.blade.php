@@ -87,15 +87,24 @@
                 </select>
             </div>
         </div>
-        @if ($task->status->value != 'Vencida')
+        <div class="flex justify-end gap-4">
+            @if ($task->status->value != 'Vencida')
+                <div class="md:col-span-5 text-right">
+                    <div>
+                        <input type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10 cursor-pointer"
+                            value="Actualizar" />
+                    </div>
+                </div>
+            @endif
             <div class="md:col-span-5 text-right">
                 <div>
-                    <input type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10 cursor-pointer"
-                        value="Actualizar" />
+                    <input type="button" wire:confirm="¿Está seguro?" wire:click="deleteTask()"
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-10 cursor-pointer"
+                        value="Borrar" />
                 </div>
             </div>
-        @endif
+        </div>
 
     </form>
 </div>
