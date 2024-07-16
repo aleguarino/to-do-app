@@ -20,6 +20,7 @@ En el archivo de configuración .env habrá que indicar la conexión a la base d
 
 Para lanzar la aplicación descarga el código fuente y ejecuta los siguientes comandos:
 
+` php artisan migrate `
 ` npm run dev `
 ` php artisan serve `
 
